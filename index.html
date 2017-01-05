@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Grade Payouts</title>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+
+    <script>
+      function payout ( grade ) {
+        
+        var coefficient = 0.1 * $("#year").val();
+        var exponent = 2;
+        var zeroPayoutGrade = 85;
+
+
+        var diff = grade - zeroPayoutGrade;
+        return Math.sign(diff) * Math.ceil( coefficient * diff ** exponent );
+      };
+
+      // for( g=70; g<101; g++ ) {
+      //   console.log( g + ": " + payout(g) );
+      // }
+
+      $(document).ready(function(){
+        $("#calc-button").click(function() {
+          var dollars =
+            payout( $("#math-grade").val() ) +
+            payout( $("#la-grade").val() ) +
+            payout( $("#science-grade").val() ) +
+            payout( $("#ss-grade").val() );
+
+          $("#calculation").html( "If you get these grades you'll get a $" + dollars + " Amazon gift card" );
+        })
+      });
+
+    </script>
+
+  </head>
+  <body>
+    Your grade (year): <input id="year" value="7" /><br />
+    Math: <input id="math-grade" value="95" /><br />
+    Language Arts: <input id="la-grade" value="95" /><br />
+    Science: <input id="science-grade" value="95" /><br />
+    Social Studies: <input id="ss-grade" value="95" /><br />
+    <input type="button" id="calc-button" value="Calculate" /><br />
+    <div id="calculation"></div>
+  </body>
+</html>
